@@ -9,7 +9,7 @@ from typing import Any, Dict, List
 
 import streamlit as st
 
-from agent import CouponAgent, State
+from agent import KFCAgent
 from scraper import should_update_coupons, scrape_and_parse, load_coupons_from_cache
 
 
@@ -45,7 +45,7 @@ def initialize_agent():
         st.stop()
 
     # 建立 Agent
-    agent = CouponAgent(coupons)
+    agent = KFCAgent(coupons)
     return agent, coupons, reason
 
 
