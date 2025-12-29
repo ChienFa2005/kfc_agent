@@ -24,8 +24,14 @@ st.title("🍗 KFC 優惠券推薦小幫手")
 st.caption("AI 對話式推薦 - 告訴我人數和想吃的，我來幫你找最適合的優惠券！")
 
 
+# ---------- Initialize Session State ----------
+if "initialized" not in st.session_state:
+    st.session_state.initialized = False
+    st.session_state.agent = None
+    st.session_state.coupons = []
+    st.session_state.cache_reason = ""
+
 # ---------- Load Coupons ----------
-@st.cache_resource(show_spinner=False)
 def initialize_agent():
     """初始化 Agent 和優惠券資料"""
     # 檢查是否需要更新
@@ -49,11 +55,42 @@ def initialize_agent():
     return agent, coupons, reason
 
 
+# ---------- First Time Initialization ----------
+if not st.session_state.initialized:
+    need_update, reason = should_update_coupons()
+
+    if need_update:
+        # 顯示爬蟲進度在主畫面
+        status_placeholder = st.empty()
+        status_placeholder.info(f"📡 {reason}，正在更新優惠券資料...")
+
+        try:
+            coupons = scrape_and_parse(force_update=True)
+            status_placeholder.success(f"✅ 更新完成！已載入 {len(coupons)} 張優惠券")
+        except Exception as e:
+            status_placeholder.warning(f"⚠️ 更新失敗：{e}，使用快取資料")
+            coupons = load_coupons_from_cache()
+    else:
+        coupons = load_coupons_from_cache()
+
+    if not coupons:
+        st.error("❌ 無法載入優惠券資料")
+        st.stop()
+
+    # 建立 Agent 並儲存到 session state
+    st.session_state.agent = KFCAgent(coupons)
+    st.session_state.coupons = coupons
+    st.session_state.cache_reason = reason if not need_update else "資料是最新的"
+    st.session_state.initialized = True
+
+
 # ---------- Sidebar Info ----------
 with st.sidebar:
     st.header("📊 系統資訊")
 
-    agent, coupons, cache_reason = initialize_agent()
+    agent = st.session_state.agent
+    coupons = st.session_state.coupons
+    cache_reason = st.session_state.cache_reason
 
     st.metric("優惠券數量", len(coupons))
     st.info(f"💾 {cache_reason}")
@@ -82,9 +119,6 @@ with st.sidebar:
 
 
 # ---------- Initialize Chat State ----------
-if "agent" not in st.session_state:
-    st.session_state.agent = agent
-
 if "messages" not in st.session_state:
     st.session_state.messages = []
     # 顯示歡迎訊息
