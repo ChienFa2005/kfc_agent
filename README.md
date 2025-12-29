@@ -36,6 +36,13 @@ This project implements an AI-powered conversational agent that helps users find
 
 ## System Architecture
 
+### System Flow Chart
+
+<!-- TODO: Add system flow chart image here -->
+![System Flow Chart](path/to/your/system-flowchart.png)
+
+> **Note**: Replace `path/to/your/system-flowchart.png` with your actual system flow chart image
+
 ### Finite State Machine (FSM)
 
 > **Note**: Detailed FSM diagrams and system flow charts are available in [`docs/architecture.md`](docs/architecture.md)
