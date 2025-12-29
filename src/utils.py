@@ -5,7 +5,7 @@
 
 import requests
 import logging
-from config import config
+from config.config import config
 
 # 設定日誌
 logging.basicConfig(

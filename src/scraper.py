@@ -11,8 +11,8 @@ import logging
 from typing import List, Dict, Optional
 from datetime import datetime, timedelta
 from pathlib import Path
-from config import config
-from utils import call_llm
+from config.config import config
+from src.utils import call_llm
 
 logger = logging.getLogger(__name__)
 

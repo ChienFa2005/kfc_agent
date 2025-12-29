@@ -6,9 +6,9 @@ KFC 優惠券推薦 AI Agent
 
 from enum import Enum
 import json
-from utils import call_llm
-from prompts import EXTRACT_INFO_PROMPT
-from config import config
+from src.utils import call_llm
+from src.prompts import EXTRACT_INFO_PROMPT
+from config.config import config
 
 
 class State(Enum):

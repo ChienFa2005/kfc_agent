@@ -6,9 +6,9 @@ KFC 優惠券推薦 AI Agent - 主程序
 """
 
 import sys
-from agent import KFCAgent
-from config import config
-from utils import test_connection
+from src.agent import KFCAgent
+from config.config import config
+from src.utils import test_connection
 
 
 def print_banner():

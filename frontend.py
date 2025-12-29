@@ -9,8 +9,8 @@ from typing import Any, Dict, List
 
 import streamlit as st
 
-from agent import KFCAgent
-from scraper import should_update_coupons, scrape_and_parse, load_coupons_from_cache
+from src.agent import KFCAgent
+from src.scraper import should_update_coupons, scrape_and_parse, load_coupons_from_cache
 
 
 # ---------- Page Config ----------
@@ -87,7 +87,7 @@ if not st.session_state.initialized:
 
         try:
             # 執行爬蟲（帶進度回調）
-            import scraper
+            from src import scraper
             # 暫時 patch scraper 的 logger 來捕獲進度
             original_logger = scraper.logger
 
