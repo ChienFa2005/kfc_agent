@@ -12,7 +12,6 @@
 - [Project Structure](#project-structure)
 - [Installation & Usage](#installation--usage)
 - [Core Implementation](#core-implementation)
-- [Demo](#demo)
 - [Team Members](#team-members)
 
 ---
@@ -33,19 +32,14 @@ This project implements an AI-powered conversational agent that helps users find
 - **Dual Interface**: Both CLI and Streamlit web UI available
 
 ---
-
 ## System Architecture
 
 ### System Flow Chart
-
-<!-- TODO: Add system flow chart image here -->
-![System Flow Chart](path/to/your/system-flowchart.png)
-
-> **Note**: Replace `path/to/your/system-flowchart.png` with your actual system flow chart image
+![i](resource/flowchart.jpg)
 
 ### Finite State Machine (FSM)
+![i](resource/fsm.jpg)
 
-> **Note**: Detailed FSM diagrams and system flow charts are available in [`docs/architecture.md`](docs/architecture.md)
 
 The agent operates through 6 distinct states:
 
@@ -244,63 +238,9 @@ filtered.sort(key=lambda x: (-x["match_score"], x["people_diff"], x["price"]))
 
 ---
 
-## Demo
-
-### Screenshots
-
-<!-- TODO: Add screenshots here -->
-> **Coming soon**: Live demo screenshots will be added before presentation.
-
-### Demo Video
-
-<!-- TODO: Add demo video link -->
-> **Coming soon**: Video demonstration will be uploaded to [YouTube/Platform].
-
-### Example Interaction
-
-```
-Agent > Available menu items:
-        Fried Chicken: 炸雞, 辣脆雞, 香麻脆雞...
-        Burgers: 雞腿堡
-        Drinks: 可樂, 綠茶, 奶茶
-        Desserts: 蛋撻, QQ球
-        Others: 薯條
-
-User > 3個人，想吃炸雞和蛋撻
-Agent > Recorded:
-        Group size: 3 people
-        Preferences: 炸雞, 蛋撻
-
-User > 好了
-Agent > Found 5 matching coupons:
-
-        1. 炸雞全家餐 299元
-           Content: 9塊香酥炸雞 + 3個蛋撻
-           Price: 299元
-           Matched: 炸雞, 蛋撻
-           Serves: 3 people
-```
-
----
-
 ## Team Members
 
-<!-- TODO: Add team member information -->
-> Team member details will be added here.
-
----
-
-## License
-
-This project is developed as part of the **TOC (Theory of Computation) 2025 Final Project**.
-
----
-
-## Acknowledgments
-
-- **Course**: Theory of Computation 2025
-- **LLM API Provider**: NCKU CSIE Department
-- **KFC Taiwan**: For providing public coupon API
+操
 
 ---
 
