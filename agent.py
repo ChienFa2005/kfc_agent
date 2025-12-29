@@ -165,9 +165,17 @@ class KFCAgent:
         if new_num_people is not None:
             self.context["num_people"] = new_num_people
         if new_preferences:
+            # 過濾偏好：只接受已知的食物關鍵字
+            valid_keywords = ['雞', '炸雞', '脆雞', '漢堡', '堡', '薯', '薯條', '可樂', '飲料', '蛋', '蛋撻', '雞塊', '甜點']
+            filtered_prefs = []
+            for pref in new_preferences:
+                # 檢查偏好是否包含任何已知關鍵字
+                if any(keyword in pref for keyword in valid_keywords):
+                    filtered_prefs.append(pref)
+
             # 合併偏好，避免重複
             existing_prefs = self.context.get("preferences", [])
-            all_prefs = existing_prefs + new_preferences
+            all_prefs = existing_prefs + filtered_prefs
             self.context["preferences"] = list(set(all_prefs))  # 去重
 
         # 檢查資訊是否完整
