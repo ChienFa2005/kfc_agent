@@ -189,14 +189,7 @@ with st.sidebar:
 
 
 # ---------- Initialize Chat State ----------
-if "messages" not in st.session_state:
-    st.session_state.messages = []
-    # 顯示歡迎訊息
-    welcome_msg = st.session_state.agent.process("")
-    st.session_state.messages.append({
-        "role": "assistant",
-        "content": welcome_msg
-    })
+# (messages already initialized during first-time setup above)
 
 
 # ---------- Helper Functions ----------
