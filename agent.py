@@ -304,7 +304,7 @@ class KFCAgent:
 
     def _show_menu(self):
         """顯示可選品項列表（分類顯示）"""
-        menu = "\n💡 不知要吃什麼嗎？從這裡下手！\n\n"
+        menu = "\n💡 你是低能兒嗎？從這裡下手！\n"
         menu += "🍗 優惠券包含的品項\n"
         menu += "=" * 60 + "\n\n"
 
