@@ -120,7 +120,10 @@ class KFCAgent:
         for category, items in self.available_items.items():
             if items:  # 只顯示有品項的分類
                 icon = category_icons.get(category, '📌')
-                msg += f"{icon} {category}：{', '.join(items)}\n"
+                msg += f"{icon} {category}：\n"
+                for item in items:
+                    msg += f"   • {item}\n"
+                msg += "\n"  # 分類之間空一行
 
         msg += """\n💡 使用方式：
 1️⃣  告訴我有幾位用餐
