@@ -142,16 +142,12 @@ if not st.session_state.initialized:
     st.session_state.cache_reason = reason if not need_update else "資料是最新的"
     st.session_state.initialized = True
 
-    # 顯示歡迎訊息和品項列表
+    # 顯示歡迎訊息和品項列表（加入 messages，會在後續統一渲染）
     welcome_msg = st.session_state.agent.process("")
     st.session_state.messages.append({
         "role": "assistant",
         "content": welcome_msg
     })
-
-    # 在畫面上顯示歡迎訊息
-    with st.chat_message("assistant"):
-        st.markdown(welcome_msg)
 
 
 # ---------- Sidebar Info ----------
