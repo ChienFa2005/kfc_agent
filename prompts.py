@@ -28,7 +28,11 @@ EXTRACT_INFO_PROMPT = """從使用者訊息提取資訊。你需要靈活理解�
   * 「蛋塔」「蛋撻」「甜點」→ ["蛋撻"]（注意：統一用「蛋撻」，不是「蛋塔」）
   * 「雞塊」「nugget」→ ["雞塊"]
   * 如果使用者說「隨便」「都可以」→ []
-  * 重要：只提取與 KFC 食物相關的詞彙，忽略無關的詞（如髒話、無意義詞彙）
+  * **重要規則：**
+    - 只提取使用者**明確提到**的食物
+    - 絕對不要猜測或添加使用者沒說的食物
+    - 如果使用者沒提到任何食物，preferences 必須是 []
+    - 純數字輸入（如「45」「100」）不是食物，preferences 必須是 []
 
 - 菜單：判斷使用者是否需要查看菜單
   * 想看菜單：「沒想法」「不知道」「隨便」「有什麼」「看菜單」「選擇困難」「推薦」→ true
@@ -82,6 +86,18 @@ EXTRACT_INFO_PROMPT = """從使用者訊息提取資訊。你需要靈活理解�
 
 輸入：「3個人」
 輸出：{{"num_people": 3, "preferences": [], "want_menu": false}}
+
+輸入：「45」
+輸出：{{"num_people": 45, "preferences": [], "want_menu": false}}
+
+輸入：「100」
+輸出：{{"num_people": 100, "preferences": [], "want_menu": false}}
+
+輸入：「好了」
+輸出：{{"num_people": null, "preferences": [], "want_menu": false}}
+
+輸入：「ok」
+輸出：{{"num_people": null, "preferences": [], "want_menu": false}}
 
 現在處理：
 """
