@@ -59,16 +59,72 @@ def initialize_agent():
 if not st.session_state.initialized:
     need_update, reason = should_update_coupons()
 
+    # 初始化訊息列表（如果需要爬蟲，先顯示對話）
+    if "messages" not in st.session_state:
+        st.session_state.messages = []
+
     if need_update:
-        # 顯示爬蟲進度在主畫面
-        status_placeholder = st.empty()
-        status_placeholder.info(f"📡 {reason}，正在更新優惠券資料...")
+        # AI 告知需要爬蟲
+        init_msg = f"👋 歡迎使用！我發現{reason}，讓我先幫你抓取最新的優惠券資料..."
+        st.session_state.messages.append({
+            "role": "assistant",
+            "content": init_msg
+        })
+
+        # 顯示 AI 訊息
+        with st.chat_message("assistant"):
+            st.markdown(init_msg)
+
+        # 建立進度訊息容器
+        progress_container = st.chat_message("assistant")
+        with progress_container:
+            progress_text = st.empty()
+            progress_text.markdown("📡 正在爬取優惠券資料...")
+
+        # 定義進度回調函數
+        def progress_callback(current, total):
+            progress_text.markdown(f"📡 正在爬取優惠券資料... ({current}/{total})")
 
         try:
+            # 執行爬蟲（帶進度回調）
+            import scraper
+            # 暫時 patch scraper 的 logger 來捕獲進度
+            original_logger = scraper.logger
+
+            class ProgressLogger:
+                def info(self, msg):
+                    if "進度：" in msg:
+                        # 提取進度資訊
+                        parts = msg.split("進度：")[1].split("/")
+                        if len(parts) == 2:
+                            current = parts[0].strip()
+                            total = parts[1].strip()
+                            progress_text.markdown(f"📡 正在解析優惠券... ({current}/{total})")
+                    original_logger.info(msg)
+
+                def warning(self, msg):
+                    original_logger.warning(msg)
+
+                def error(self, msg):
+                    original_logger.error(msg)
+
+            scraper.logger = ProgressLogger()
             coupons = scrape_and_parse(force_update=True)
-            status_placeholder.success(f"✅ 更新完成！已載入 {len(coupons)} 張優惠券")
+            scraper.logger = original_logger  # 還原
+
+            # 完成訊息
+            progress_text.markdown(f"✅ 完成！已載入 {len(coupons)} 張最新優惠券")
+            st.session_state.messages.append({
+                "role": "assistant",
+                "content": f"✅ 完成！已載入 {len(coupons)} 張最新優惠券"
+            })
+
         except Exception as e:
-            status_placeholder.warning(f"⚠️ 更新失敗：{e}，使用快取資料")
+            progress_text.markdown(f"⚠️ 更新失敗：{e}，使用快取資料")
+            st.session_state.messages.append({
+                "role": "assistant",
+                "content": f"⚠️ 更新失敗，使用快取資料"
+            })
             coupons = load_coupons_from_cache()
     else:
         coupons = load_coupons_from_cache()
