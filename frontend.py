@@ -102,6 +102,9 @@ if not st.session_state.initialized:
                             progress_text.markdown(f"📡 正在解析優惠券... ({current}/{total})")
                     original_logger.info(msg)
 
+                def debug(self, msg):
+                    original_logger.debug(msg)
+
                 def warning(self, msg):
                     original_logger.warning(msg)
 
