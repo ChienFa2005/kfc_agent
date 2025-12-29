@@ -3,6 +3,7 @@
 # 核心套件
 requests>=2.31.0          # HTTP 請求（LLM API、爬蟲）
 python-dotenv>=1.0.0      # 環境變數管理
+streamlit>=1.28.0         # Web UI 前端
 
 # 爬蟲相關（未來使用）
 beautifulsoup4>=4.12.0    # HTML 解析
