@@ -40,24 +40,15 @@ This project implements an AI-powered conversational agent that helps users find
 ### Finite State Machine (FSM)
 ![i](resource/fsm.jpg)
 
-
-The agent operates through 6 distinct states:
-
-```
-IDLE → ASKING_INFO ⇄ SHOW_MENU
-          ↓
-      FILTERING
-          ↓
-       RESULTS → DONE
-```
-
 **State Descriptions**:
 - `IDLE`: Initial state, waiting for activation
+- `CRAWLER`: Fetching data via KFC API
 - `ASKING_INFO`: Collecting user preferences (group size, food items)
 - `SHOW_MENU`: Display available menu items when user is uncertain
 - `FILTERING`: Process coupon matching based on collected information
 - `RESULTS`: Present ranked recommendations
 - `DONE`: Conversation completed
+
 
 ### System Workflow
 
@@ -235,13 +226,3 @@ Coupons are sorted by:
 ```python
 filtered.sort(key=lambda x: (-x["match_score"], x["people_diff"], x["price"]))
 ```
-
----
-
-## Team Members
-
-操
-
----
-
-**Last Updated**: 2025-12-30
